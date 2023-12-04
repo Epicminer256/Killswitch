@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Killswitch Installer</title>
+     
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#FFD700">
+    
+    <style>
+      html, body {
+        background-color: {{bgColor}};
+        color: {{mainColor}};
+        font-family: helvetica, arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0;
+        padding: 0;
+      }
+      button{
+	    margin: 5px;
+	    font-size: 25px;
+	    background-color: transparent;
+	    color: {{mainColor}};
+	    border-color: {{mainColor}};
+	    border-radius: 20px;
+	    padding: 20px;
+        }
+ 
+    </style>
+    <script defer src="./main.js"></script>
+  </head>
+  <body>
+   <center>
+	   <h1>Click To Install</h1>
+	   <button id='install'>Install Killswitch</button>
+	   <script>
+	      let deferredPrompt;
+	      document.querySelector('#install').addEventListener('click', async () => {
+		  if (deferredPrompt !== null) {
+		      deferredPrompt.prompt();
+		      const { outcome } = await deferredPrompt.userChoice;
+		      if (outcome === 'accepted') {
+			  deferredPrompt = null;
+		      }
+		  }
+	      });
+	      window.addEventListener('beforeinstallprompt', (e) => {
+		deferredPrompt = e;
+	      })
+	      if ("serviceWorker" in navigator) {
+		window.addEventListener("load", () => {
+		  navigator.serviceWorker && navigator.serviceWorker.register("./sw.js");
+		});
+	      }
+	      if(window.matchMedia('(display-mode: standalone)').matches){
+		document.querySelector("h1").textContent = "Already installed! \n --> Open killswitch to finish install <--"
+		document.querySelector("button").remove()
+	      }
+	      window.addEventListener('appinstalled', () => {
+		deferredPrompt = null;
+		document.querySelector("h1").textContent = "Installed! \n To finish install, right click the Google app in your apps and click Killswitch"
+		document.querySelector("button").remove()
+	      })
+	   </script>
+   </center>
+  </body>
+</html>

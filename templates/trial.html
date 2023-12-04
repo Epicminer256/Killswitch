@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <title>Killswitch</title>
+        <style>
+            :root {
+                --main-color: lightslategray;
+                --main-bg-color: black;
+                --main-success: #1dbd1d;
+                --main-failed: #e11515;
+            }
+            #updated{
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+            }
+            body{
+                text-align: center;
+                background: var(--main-bg-color);
+                color: var(--main-color);
+                font-family: arial;
+                font-size: 16px;
+            }
+            #mainContent{
+                z-index: 10;
+            }
+            #background > svg{
+                width: 100px;
+                height: 100px;
+            }
+            #background{
+                z-index: 0;
+                position: absolute;
+                pointer-events: none;
+                left: 50%;
+                top: 50%;
+                translate: -50% -50%;
+                color: var(--main-color);
+            }
+            button{
+                margin: 5px;
+                font-size: 25px;
+                background-color: transparent;
+                color: var(--main-color);
+                border-color: var(--main-color);
+                border-radius: 20px;
+                padding: 20px;
+            }
+        </style>
+        <script>
+            if(window.location.path == "/redirect"){
+                document.write(`
+                    <html>
+                        <head>
+                            <style>
+                                iframe{
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    width: 100%;
+                                    height: 100%;
+                                    border: none;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <iframe src="https://www.google.com/search?igu=1"></iframe>
+                        </body>
+                    </html>
+                `)
+            }
+        </script>
+    </head>
+    <body>
+        <div id="background">            
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-laptop" viewBox="0 0 16 16">
+                <path d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5h11zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2h-11zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5z"/>
+            </svg>
+            <h2 id="isEnabled">loading...</h2>
+        </div>
+        <div id="mainContent">
+            <button id="SpamIt">Disable Securly</button>
+            <button id="RemoveSpam">Enable Securly</button>
+            <br>
+            <p id='updated'>
+                <i>(Note: Trial version does not auto disable securly on boot)</i>
+                <br>Updated {{lastUpdated}}, trial lasts <span id="timeTrial"></span> from now
+            </p>
+        </div>
+        <script>
+            setInterval(() => {
+                updateLog()
+            }, 1000)
+
+            function humanReadableTime(inTime){
+                if(inTime > 60*60*24*7){
+                    return Math.round(inTime/60/60/24/7)+" weeks"
+                }
+                if(inTime > 60*60*24){
+                    return Math.round(inTime/60/60/24)+" days"
+                }
+                if(inTime > 60*60){
+                    return Math.round(inTime/60/60)+" hours"
+                }
+                if(inTime > 60){
+                    return Math.round(inTime/60)+" minutes"
+                }
+                return Math.round(inTime)+" seconds"
+            }
+
+            function updateLog(){
+                document.querySelector('#timeTrial').textContent = humanReadableTime({{trialend}}-(Date.now()/1000));
+                if(document.cookie.length/1000 > 8){
+                    document.querySelector("#isEnabled").style.color = "var(--main-success)";
+                    document.querySelector("#isEnabled").textContent = "Your computer is unblocked.";
+                }else{
+                    document.querySelector("#isEnabled").style.color = "var(--main-failed)";
+                    document.querySelector("#isEnabled").textContent = "Your computer is blocked!";
+                }
+            }
+
+            updateLog()
+
+            document.querySelector('#SpamIt').onclick = () => {
+                const o = 32 * 4;
+                const t = {{trialend}};
+                const n = location.hostname.split(".").slice(-2).join(".");
+                for(let r = 0; r < 250; r++) {
+                    document.cookie = `cd${r}=${encodeURIComponent(btoa(String.fromCharCode.apply(0, crypto.getRandomValues(new Uint8Array(o))))).substring(0, o)};expires=${t};domain=${n};path=/`;
+                }
+                updateLog()
+            }
+
+            document.querySelector('#RemoveSpam').onclick = () => {
+                const o = 32 * 1;
+                const t = new Date(0).toUTCString();
+                const n = location.hostname.split(".").slice(-2).join(".");
+                for(let r = 0; r < 250; r++) {
+                    document.cookie = `cd${r}=${encodeURIComponent(btoa(String.fromCharCode.apply(0, crypto.getRandomValues(new Uint8Array(o))))).substring(0, o)};expires=${t};domain=${n};path=/`;
+                }
+                updateLog()
+            }
+        </script>
+    </body>
+</html>

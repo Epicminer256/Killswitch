@@ -1,0 +1,33 @@
+{
+  "short_name": "Google",
+  "name": "Google",
+  "icons": [
+    {
+      "src": "https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+    "shortcuts": [
+    {
+      "name": "Google",
+      "short_name": "Google",
+      "description": "A search engine by Google",
+      "url": "/?redirect",
+      "icons": [{ "src": "https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png", "sizes": "512x512" }]
+    },
+    {
+      "name": "Killswitch",
+      "short_name": "Killswitch",
+      "description": "Kill securly",
+      "url": "/offline.html",
+      "icons": [{ "src": "./144x144.png", "sizes": "144x144" }]
+    }
+  ],
+  "start_url": "/?redirect",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#2196f3",
+  "description": "A search engine by Google"
+}

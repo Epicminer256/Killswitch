@@ -1,0 +1,3 @@
+[submodule "epicdnschef"]
+	path = epicdnschef
+	url = https://github.com/epicminer256/epicdnschef
