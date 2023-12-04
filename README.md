@@ -11,8 +11,8 @@ If you clear your browser cache, the program gets essentually wiped off the app.
 # Wanna deploy?
 
 ### Setup on windows:
-1. Make venv with `python -m venv .`
-2. Install dependencies for epicdnschef and install flask
+1. Install python
+2. Install dependencies for epicdnschef `pip install -r epicdnschef\requirements.txt` and install flask `pip install flask`
 
 ### Running on Windows:
 - Target Machine
@@ -27,7 +27,12 @@ If you clear your browser cache, the program gets essentually wiped off the app.
     3. After install, right-click the Google app and look for "Killswitch"
     4. After opening, it installs itself and you can now disconnect from the hotspot. Also make sure to click `Disable Securly` on the way
 
-### If you are on GNU/Linux (for the wierdo nerd setups):
+### Setting up on GNU/Linux (for the wierdo nerd setups):
+1. Install python
+2. Make venv `python -m venv .`
+2. Install dependencies for epicdnschef `./bin/pip install -r epicdnschef\requirements.txt` and install flask `./bin/pip install flask`
+
+### Running on GNU/Linux:
 - Target Machine
     1. On target machine, goto `chrome://flags` and goto `Unsafely treat insecure origins as secure`
     2. Add `http://toggle.securly.com` to the list and hit `Restart`
@@ -40,5 +45,5 @@ If you clear your browser cache, the program gets essentually wiped off the app.
     1. Have target machine connect to WiFi network
     2. Have target machine's DNS server the same as the server's ip
     3. Install PWA from website (if this doesn't work, check if the command prompts updated or not)
-    3. After install, right-click the Google app and look for "Killswitch"
-    4. After opening, it installs itself and you can now disconnect from the hotspot. Also make sure to click `Disable Securly` on the way
+    4. After install, right-click the Google app and look for "Killswitch"
+    5. After opening, it installs itself and you can now disconnect from the hotspot. Also make sure to click `Disable Securly` on the way
