@@ -69,10 +69,6 @@ def offline():
 def favicon():
     return send_file('icons/favicon.ico', mimetype='image/x-icon')
 
-@app.route('/appicon')
-def appicon():
-    return send_file('icons/appicon.png', mimetype='image/png')
-
 @app.route('/144x144.png')
 def icon():
     return send_file('icons/144x144.png', mimetype='image/png')
