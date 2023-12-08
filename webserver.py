@@ -1,13 +1,14 @@
 from flask import Flask, render_template, send_file, make_response, request
 from datetime import datetime
 import sys
+import time
 app = Flask(__name__)
 
 days = None
 template = "trial.html"
 try:
     sys.argv[2]
-    if sys.argv[2] > 0:
+    if int(sys.argv[2]) > 0:
       days = int(sys.argv[2])
 except IndexError:
     template = 'index.html'
@@ -29,7 +30,7 @@ else:
 
 def getTrialTime():
     if template == "trial.html":
-        return (secondsInADay*int(sys.argv[2])) + time.time()
+        return (60*60*12*int(sys.argv[2])) + time.time()
     else:
         return 0
 
@@ -63,11 +64,6 @@ def offline():
       return render_template('gold.html', clientIp=request.remote_addr, serverIp = sys.argv[1], lastUpdated = datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     else:
       return render_template('trial.html', trialend=getTrialTime(), clientIp=request.remote_addr, serverIp = sys.argv[1], lastUpdated = datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
-
-# Icons
-@app.route('/favicon.ico')
-def favicon():
-    return send_file('icons/favicon.ico', mimetype='image/x-icon')
 
 @app.route('/144x144.png')
 def icon():
