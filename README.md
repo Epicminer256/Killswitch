@@ -1,6 +1,6 @@
 # Killswitch
 
-Breaks Securly via custom Chrome app
+Breaks Securly via custom Chrome app. Deploy to chromebooks using a laptop/desktop.
 
 ![Killswitch Logo](icons/144x144.png)
 
